@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Biblioteca</title>
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Biblioteca</h2>
+            </div>
+            <nav class="sidebar-menu">
+                <button class="menu-btn active" data-target="modulo-libros">Gestión de Libros</button>
+                <button class="menu-btn" data-target="modulo-categorias">Categorías</button>
+                <button class="menu-btn" data-target="modulo-autores">Autores</button>
+                <button class="menu-btn" data-target="modulo-prestamos-admin">Solicitudes de Préstamo</button>
+                <button class="menu-btn" data-target="modulo-lectores">Gestión de Lectores</button>
+                <button class="menu-btn" data-target="modulo-perfiles">Perfiles y Permisos</button>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="logout-btn">Salir</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h1>Panel Administrativo</h1>
+                <div class="user-info" id="admin-name">Administrador</div>
+            </header>
+
+            <div class="content-body">
+                
+                <section id="modulo-libros" class="crud-section">
+                    <div class="grid-container">
+                        
+                        <div class="form-card">
+                            <h3 id="form-title">Gestionar Libro</h3>
+                            <form id="formLibro">
+                                <input type="hidden" id="idLibro">
+                                
+                                <div class="form-group">
+                                    <label for="titulo">Título</label>
+                                    <input type="text" id="titulo" placeholder="Ej: El Eternauta" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="descripcion">Descripción</label>
+                                    <textarea id="descripcion" placeholder="Sinopsis del libro..." rows="3" required></textarea>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="stock">Stock</label>
+                                        <input type="number" id="stock" placeholder="0" min="0" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="id_categoria">Categoría</label>
+                                        <select id="id_categoria" required>
+                                            <option value="">Seleccione...</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="id_autor">Autor</label>
+                                    <select id="id_autor" required>
+                                        <option value="">Seleccione...</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" id="btnGuardar" class="btn-primary">Guardar Libro</button>
+                            </form>
+                        </div>
+
+                        <div class="list-card">
+                            <h3>Libros Registrados</h3>
+                            <div class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Título</th>
+                                            <th>Autor</th>
+                                            <th>Categoría</th>
+                                            <th>Stock</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="contenido">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section id="modulo-categorias" class="crud-section hidden">
+                    <div class="grid-container">
+                        
+                        <div class="form-card">
+                            <h3 id="form-title-cat">Nueva Categoría</h3>
+                            <form id="formCategoria">
+                                <div class="form-group">
+                                    <label for="nombre_categoria">Nombre de la Categoría</label>
+                                    <input type="text" id="nombre_categoria" placeholder="Ej: Ciencia Ficción, Novela" required>
+                                </div>
+                                <button type="submit" id="btnGuardarCat" class="btn-primary">Guardar Categoría</button>
+                            </form>
+                        </div>
+
+                        <div class="list-card">
+                            <h3>Categorías Existentes</h3>
+                            <div class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre de la Categoría</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="contenido-categorias">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section id="modulo-autores" class="crud-section hidden">
+                    <div class="grid-container">
+                        
+                        <div class="form-card">
+                            <h3>Nuevo Autor</h3>
+                            <form id="formAutor">
+                                <div class="form-group">
+                                    <label for="nombre_autor">Nombre del Autor</label>
+                                    <input type="text" id="nombre_autor" placeholder="Ej: Héctor Germán Oesterheld" required>
+                                </div>
+                                <button type="submit" class="btn-primary">Guardar Autor</button>
+                            </form>
+                        </div>
+
+                        <div class="list-card">
+                            <h3>Autores Registrados</h3>
+                            <div class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre del Autor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="contenido-autores">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section id="modulo-prestamos-admin" class="crud-section hidden">
+                    <div class="list-card">
+                        <h3>Solicitudes de Préstamos de Lectores</h3>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Usuario / Lector</th>
+                                        <th>Libro Solicitado</th>
+                                        <th>Fecha de Solicitud</th>
+                                        <th>Estado Actual</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="contenido-prestamos-admin">
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="modulo-lectores" class="crud-section hidden">
+                    <div class="grid-container">
+                        
+                        <div class="form-card">
+                            <h3>Registrar Nuevo Lector</h3>
+                            <form id="formLector">
+                                <div class="form-group">
+                                    <label for="nombre_lector">Nombre Completo</label>
+                                    <input type="text" id="nombre_lector" placeholder="Ej: Juan Pérez" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email_lector">Correo Electrónico</label>
+                                    <input type="email" id="email_lector" placeholder="juan@correo.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password_lector">Contraseña Temporal</label>
+                                    <input type="password" id="password_lector" placeholder="Mínimo 8 caracteres (1 Mayús, 1 Núm)" required>
+                                </div>
+                                <button type="submit" class="btn-primary">Registrar Lector</button>
+                            </form>
+                        </div>
+
+                        <div class="list-card">
+                            <h3>Lectores Activos</h3>
+                            <div class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Email</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="contenido-lectores">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section id="modulo-perfiles" class="crud-section hidden">
+                    <div class="grid-container">
+                        
+                        <div class="form-card">
+                            <h3>Asignar Módulos al Perfil</h3>
+                            <form id="formPerfilModulo">
+                                <div class="form-group">
+                                    <label for="select_perfil">Seleccionar Perfil</label>
+                                    <select id="select_perfil" required onchange="cargarModulosDelPerfil(this.value)">
+                                        <option value="">Seleccione...</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-weight: bold; display: block; margin-bottom: 10px;">Módulos Permitidos:</label>
+                                    <div class="checkbox-list" style="display: flex; flex-direction: column; gap: 10px;">
+                                        <label><input type="checkbox" name="modulos_permisos" value="modulo-libros"> 📚 Gestión de Libros</label>
+                                        <label><input type="checkbox" name="modulos_permisos" value="modulo-categorias"> 🗂️ Categorías</label>
+                                        <label><input type="checkbox" name="modulos_permisos" value="modulo-autores"> ✍️ Autores</label>
+                                        <label><input type="checkbox" name="modulos_permisos" value="modulo-prestamos-admin"> ⏳ Solicitudes de Préstamo</label>
+                                        <label><input type="checkbox" name="modulos_permisos" value="modulo-lectores"> 👥 Gestión de Lectores</label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn-primary">Guardar Configuración</button>
+                            </form>
+                        </div>
+
+                        <div class="list-card">
+                            <h3>Perfiles del Sistema</h3>
+                            <div class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre del Perfil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="contenido-perfiles">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.querySelectorAll('.menu-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.crud-section').forEach(s => s.classList.add('hidden'));
+                
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.target).classList.remove('hidden');
+            });
+        });
+    </script>
+
+    <script src="/Biblioteca_dos/js/app.js"></script>
+    <script src="/Biblioteca_dos/js/libros.js"></script>
+
+</body>
+</html>
