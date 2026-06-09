@@ -12,9 +12,11 @@
         <h1>Registro</h1>
 
         <form id="formRegistro">
-            <input type="text" id="nombre" placeholder="Nombre" required>
-            <input type="email" id="email" placeholder="Correo" required>
+            <input type="text" id="nombre" placeholder="Nombre completo" required>
+            <input type="email" id="email" placeholder="Correo electrónico" required>
             <input type="password" id="password" placeholder="Contraseña" required>
+            
+            <input type="password" id="confirm_password" placeholder="Confirmar contraseña" required>
 
             <button type="submit">Registrarse</button>
         </form>
@@ -24,7 +26,9 @@
         <a href="login.html">Ya tengo cuenta</a>
     </div>
 
-    <script src="js/registro.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="../js/registro.js"></script>
 
 </body>
 </html>

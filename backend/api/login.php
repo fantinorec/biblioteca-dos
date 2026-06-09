@@ -14,13 +14,10 @@ $password = trim($data["password"]);
 $sql = "SELECT * FROM usuarios WHERE email = ?";
 
 $stmt = $conexion->prepare($sql);
-
 $stmt->bind_param("s", $email);
-
 $stmt->execute();
 
 $resultado = $stmt->get_result();
-
 $usuario = $resultado->fetch_assoc();
 
 if (!$usuario) {
@@ -47,7 +44,8 @@ $_SESSION["usuario"] = [
     "id" => $usuario["id"],
     "nombre" => $usuario["nombre"],
     "email" => $usuario["email"],
-    "rol" => $usuario["rol"]
+    "rol" => $usuario["rol"],
+    "id_perfil" => $usuario["id_perfil"]
 ];
 
 echo json_encode([

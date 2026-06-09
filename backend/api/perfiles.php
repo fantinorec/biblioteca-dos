@@ -8,7 +8,6 @@ header("Content-Type: application/json; charset=utf-8");
 include "../config/conexion.php";
 $metodo = $_SERVER['REQUEST_METHOD'];
 
-// ===================== LISTAR PERFILES O PERMISOS =====================
 if ($metodo === 'GET') {
     // Si pasan un ID, traemos solo los módulos de ese perfil
     if (isset($_GET['id_perfil'])) {
@@ -25,27 +24,25 @@ if ($metodo === 'GET') {
         exit;
     }
 
-    // Si no hay ID, listamos todos los perfiles para la tabla y el select
     $resultado = $conexion->query("SELECT id, nombre FROM perfiles ORDER BY id ASC");
     $perfiles = [];
     while ($fila = $resultado->fetch_assoc()) { $perfiles[] = $fila; }
     echo json_encode($perfiles);
     exit;
 }
-
-// ===================== ASIGNAR MÓDULOS AL PERFIL =====================
+//con arrays
 if ($metodo === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
     $id_perfil = intval($data['id_perfil']);
-    $modulos = $data['modulos']; // Array de strings
+    $modulos = $data['modulos'];
 
-    // 1. Limpiamos los permisos viejos del perfil
+    //limpia
     $sqlDelete = "DELETE FROM perfil_modulos WHERE id_perfil = ?";
     $stmtDel = $conexion->prepare($sqlDelete);
     $stmtDel->bind_param("i", $id_perfil);
     $stmtDel->execute();
 
-    // 2. Insertamos los nuevos checks marcados
+
     if (!empty($modulos)) {
         $sqlInsert = "INSERT INTO perfil_modulos (id_perfil, modulo) VALUES (?, ?)";
         $stmtIns = $conexion->prepare($sqlInsert);

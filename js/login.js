@@ -52,4 +52,4 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error en el login interactivo:", error);
         }
     });
-});
+})

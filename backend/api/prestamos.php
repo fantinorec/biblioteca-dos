@@ -2,9 +2,9 @@
 session_start();
 header("Content-Type: application/json");
 
-// Habilitamos el reporte de errores internos en formato PDO
+//pdo
 try {
-    // IMPORTANTE: Aseguramos que el nombre de la BD sea exacto (Biblioteca_dos)
+
     $pdo = new PDO("mysql:host=localhost;dbname=biblioteca;charset=utf8", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
@@ -14,10 +14,9 @@ try {
 
 $metodo = $_SERVER['REQUEST_METHOD'];
 
-// CASO 1: GET - El administrador pide ver todas las solicitudes
 if ($metodo === 'GET') {
     try {
-        // Traemos el préstamo junto al nombre del usuario y el título del libro
+
         $query = "SELECT p.id, u.nombre AS usuario, l.titulo AS libro, l.id AS id_libro, p.fecha_solicitud, p.estado 
                   FROM prestamos p
                   JOIN usuarios u ON p.id_usuario = u.id
@@ -35,7 +34,7 @@ if ($metodo === 'GET') {
     exit;
 }
 
-// CASO 2: POST - El administrador aprueba o rechaza una solicitud
+// admin
 if ($metodo === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
     
@@ -45,18 +44,18 @@ if ($metodo === 'POST') {
     }
 
     $id_prestamo = $data['id_prestamo'];
-    $nuevo_estado = $data['estado']; // 'aprobado' o 'rechazado'
+    $nuevo_estado = $data['estado']; 
     $id_libro = $data['id_libro'];
 
     try {
         $pdo->beginTransaction();
 
-        // 1. Actualizamos el estado del préstamo
+        
         $queryUpdate = "UPDATE prestamos SET estado = :estado WHERE id = :id";
         $stmtUpdate = $pdo->prepare($queryUpdate);
         $stmtUpdate->execute(['estado' => $nuevo_estado, 'id' => $id_prestamo]);
 
-        // 2. Si se aprueba, le restamos 1 al stock del libro automáticamente
+
         if ($nuevo_estado === 'aprobado') {
             $queryStock = "UPDATE libros SET stock = stock - 1 WHERE id = :id_libro AND stock > 0";
             $stmtStock = $pdo->prepare($queryStock);

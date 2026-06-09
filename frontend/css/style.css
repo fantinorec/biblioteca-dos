@@ -1,6 +1,4 @@
-/* ==========================================
-   1. RESET & ESTILOS BASE (Comunes a todo)
-   ========================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -11,18 +9,16 @@
 body {
     min-height: 100vh;
     color: #334155;
-    background-color: #f8fafc; /* Fondo general gris claro e impecable */
+    background-color: #f8fafc; 
 }
 
-/* Control del sistema de pestañas interactivas */
+/* Control.s.i */
 .hidden {
     display: none !important;
 }
 
 
-/* ==========================================
-   2. VISTA DE ACCESO (Login / Registro)
-   ========================================== */
+
 .auth-wrapper {
     min-height: 100vh;
     width: 100%;
@@ -106,18 +102,16 @@ body {
 .exito { color: #22c55e; }
 
 
-/* ==========================================
-   3. ARQUITECTURA DEL PANEL (Dashboard Layout)
-   ========================================== */
+/* ARQUIETECTURA */
 .dashboard-layout {
     display: flex;
     min-height: 100vh;
 }
 
-/* --- SIDEBAR IZQUIERDA --- */
+/*  IZQUIERDA  */
 .sidebar {
     width: 260px;
-    background-color: #0f172a; /* Azul noche profundo */
+    background-color: #0f172a; 
     color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -135,7 +129,7 @@ body {
     text-align: center;
 }
 
-/* Menú de navegación interno */
+/* Menú interno */
 .sidebar-menu {
     display: flex;
     flex-direction: column;
@@ -171,7 +165,7 @@ body {
     font-weight: 600;
 }
 
-/* Footer de la Sidebar (Boton Salir) */
+/*BOT.SAL*/
 .sidebar-footer {
     border-top: 1px solid #1e293b;
     padding-top: 15px;
@@ -199,15 +193,15 @@ body {
     color: #ffffff;
 }
 
-/* --- CONTENIDO PRINCIPAL DERECHO --- */
+
 .main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-width: 0; /* Evita desbordamiento de tablas */
+    min-width: 0; 
 }
 
-/* Barra superior de títulos */
+
 .top-bar {
     background-color: #ffffff;
     padding: 20px 40px;
@@ -232,24 +226,21 @@ body {
     border-radius: 20px;
 }
 
-/* Cuerpo de módulos */
 .content-body {
     padding: 40px;
     flex: 1;
     overflow-y: auto;
 }
 
-/* Contenedor Grid Centrado de dos columnas */
 .grid-container {
     display: grid;
     grid-template-columns: 360px 1fr;
     gap: 30px;
     align-items: start;
     max-width: 1300px;
-    margin: 0 auto; /* Centra todo el bloque en pantallas anchas */
+    margin: 0 auto; 
 }
 
-/* Tarjetas limpias independientes (Formulario y Lista) */
 .form-card, .list-card, .card-placeholder {
     background-color: #ffffff;
     padding: 25px;
@@ -266,10 +257,6 @@ body {
     padding-bottom: 10px;
 }
 
-
-/* ==========================================
-   4. COMPONENTES DE FORMULARIOS DEL PANEL
-   ========================================== */
 #formLibro {
     display: flex;
     flex-direction: column;
@@ -310,7 +297,6 @@ body {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-/* Fila con dos columnas internas (Para Stock y Categoría) */
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -321,7 +307,6 @@ body {
     resize: vertical;
 }
 
-/* Botón de envío del CRUD */
 .btn-primary {
     background-color: #2563eb;
     color: #ffffff;
@@ -339,10 +324,6 @@ body {
     background-color: #1d4ed8;
 }
 
-
-/* ==========================================
-   5. TABLAS DE DATOS (CRUD Listado)
-   ========================================== */
 .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -400,8 +381,6 @@ table button {
 }
 .btn-delete:hover { background-color: #fecaca; }
 
-
-/* Placerholder para otras pestañas vacías */
 .card-placeholder p {
     color: #64748b;
     font-size: 14px;

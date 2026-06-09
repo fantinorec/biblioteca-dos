@@ -2,7 +2,6 @@
 const API = "http://localhost/Biblioteca_dos/backend/api";
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Carga prioritaria y aislada de selectores estructurales
     try { cargarAutores(); } catch (e) { console.error("Error al cargar autores:", e); }
     try { cargarCategorias(); } catch (e) { console.error("Error al cargar categorías:", e); }
     try { cargarSelectPerfiles(); } catch (e) { console.error("Error al cargar perfiles en select:", e); }
@@ -14,8 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try { cargarTablaLectores(); } catch (e) { console.error("Error:", e); }
     try { cargarTablaAutores(); } catch (e) { console.error("Error:", e); }
     try { cargarTablaPerfiles(); } catch (e) { console.error("Error:", e); }
-    
-    // Escuchadores de formularios compactados
+
     const mapeoFormularios = { 
         formLibro: guardarLibro, 
         formCategoria: guardarCategoria, 
@@ -27,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.entries(mapeoFormularios).forEach(([id, funcion]) => document.getElementById(id)?.addEventListener("submit", funcion));
 });
 
-// --- FUNCIÓN NÚCLEO: PETICIÓN API GENÉRICA ---
+// api
 async function peticionAPI(url, datos = null, metodo = "POST") {
     try {
         const opciones = { method: metodo, headers: { "Content-Type": "application/json" } };
@@ -41,11 +39,10 @@ async function peticionAPI(url, datos = null, metodo = "POST") {
     }
 }
 
-// --- DISPARADOR DE ALERTAS SWEETALERT2 ---
 const alerta = (icono, titulo, texto, clases = 'btn-swal-confirm') => 
     Swal.fire({ icon: icono, title: titulo, text: texto, customClass: { confirmButton: clases } });
 
-// ===================== VALIDACIONES Y REGISTRO =====================
+//reg
 function validarContrasenas() {
     const c1 = document.getElementById("password").value, c2 = document.getElementById("confirm_password").value;
     if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(c1)) return !alerta('error', 'Contraseña poco segura', 'Mínimo 8 caracteres, una mayúscula, una minúscula y un número.', 'btn-swal-error');
@@ -62,7 +59,7 @@ async function procesarRegistroUsuario(e) {
     else alerta('error', 'Error', res.mensaje, 'btn-swal-error');
 }
 
-// ===================== MÓDULO: LIBROS =====================
+// libros
 async function guardarLibro(e) {
     e.preventDefault();
     const id = document.getElementById("idLibro").value;
@@ -104,7 +101,7 @@ async function eliminarLibro(id) {
     });
 }
 
-// ===================== MÓDULO: SELECTORES Y CATEGORÍAS =====================
+// categoria
 async function cargarSelector(url, idElemento, prefijo) {
     const datos = await peticionAPI(url, null, "GET");
     const select = document.getElementById(idElemento);
@@ -128,7 +125,7 @@ async function cargarTablaCategorias() {
     tabla.innerHTML = cats.length ? cats.map(c => `<tr><td>#${c.id}</td><td><strong>${c.nombre}</strong></td><td><span class="text-activo">✔ Activo</span></td></tr>`).join('') : `<tr><td colspan="3" class="table-empty-notice">No hay categorías.</td></tr>`;
 }
 
-// ===================== MÓDULO: AUTORES =====================
+//autores
 async function guardarAutor(e) {
     e.preventDefault();
     const res = await peticionAPI(`${API}/autores.php`, { nombre: document.getElementById("nombre_autor").value });
@@ -151,7 +148,7 @@ async function cargarTablaAutores() {
         : `<tr><td colspan="2" class="table-empty-notice">No hay autores registrados.</td></tr>`;
 }
 
-// ===================== MÓDULO: PRÉSTAMOS =====================
+// prestamos
 async function cargarPrestamosAdmin() {
     const prestamos = await peticionAPI(`${API}/prestamos.php`, null, "GET");
     const tabla = document.getElementById("contenido-prestamos-admin");
@@ -171,7 +168,7 @@ async function resolverPrestamo(id_prestamo, id_libro, estado) {
     cargarPrestamosAdmin(); cargarLibros();
 }
 
-// ===================== MÓDULO: LECTORES =====================
+// lectores
 async function cargarTablaLectores() {
     const lectores = await peticionAPI(`${API}/lectores.php`, null, "GET");
     const tabla = document.getElementById("contenido-lectores");
@@ -198,7 +195,7 @@ async function eliminarLectorLogico(id) {
     });
 }
 
-// ===================== MÓDULO: PERFILES Y PERMISOS =====================
+// perf y perm
 async function cargarSelectPerfiles() {
     const perfiles = await peticionAPI(`${API}/perfiles.php`, null, "GET");
     const select = document.getElementById("select_perfil");
