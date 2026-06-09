@@ -5,7 +5,6 @@ session_start();
 
 include "../config/conexion.php";
 
-// Verificar sesión
 if (!isset($_SESSION["usuario"])) {
     echo json_encode([]);
     exit;
